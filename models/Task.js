@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const TaskSchema = new mongoose.Schema({
-  goalId: { type: mongoose.Schema.Types.ObjectId, ref: 'Goal', required: true },
-  title: { type: String, required: true },
-  quantity: { type: Number, required: true },
-  frequency: { 
-    type: { type: String, required: true }, 
-    values: { type: [String], required: true } 
-  },
-  reminders: { type: [Date] },
-  autoTimeSuggestions: { type: [Date] },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+const taskSchema = new Schema({
+  goal_id: { type: Schema.Types.ObjectId, ref: 'Goal' },
+  title: String,
+  description: String,
+  quantity: Number,
+  frequency: String,
+  days_of_week: [String],
+  reminder_time: String,
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Task', TaskSchema);
+module.exports = mongoose.model('Task', taskSchema);

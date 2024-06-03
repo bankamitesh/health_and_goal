@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const GoalSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  title: { type: String, required: true },
-  description: { type: String },
-  minTimeline: { type: Date, required: true },
-  maxTimeline: { type: Date, required: true },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+const goalSchema = new Schema({
+  user_id: { type: Schema.Types.ObjectId, ref: 'User' },
+  title: String,
+  description: String,
+  min_timeline: Number,
+  max_timeline: Number,
+  user_timeline: Number,
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Goal', GoalSchema);
+module.exports = mongoose.model('Goal', goalSchema);

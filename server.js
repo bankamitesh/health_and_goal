@@ -1,19 +1,22 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const connectDB = require('./config/db');
+const authRoutes = require('./routes/auth');
+const goalRoutes = require('./routes/goals');
+const taskRoutes = require('./routes/tasks');
+const logRoutes = require('./routes/logs');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
+connectDB();
+
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/goaltracker', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+app.use('/api/auth', authRoutes);
+app.use('/api/goals', goalRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/logs', logRoutes);
 
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/goals', require('./routes/goals'));
-app.use('/api/tasks', require('./routes/tasks'));
-
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
